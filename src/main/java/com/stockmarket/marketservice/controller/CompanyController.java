@@ -56,13 +56,14 @@ public class CompanyController {
 
         return ResponseEntity.ok(companyService.getCompanyListInStockExchanges(stockExchange));
     }
+
     @PostMapping("/sector/companies")
     public ResponseEntity<List<Optional<Company>>> getCompanyBySector(@RequestBody Sector sector){
 
         return ResponseEntity.ok(companyService.getCompanyListInSector(sector));
     }
 
-    @PostMapping("/company/delete")
+    @PostMapping("/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteCompany(@RequestBody Company company){
 

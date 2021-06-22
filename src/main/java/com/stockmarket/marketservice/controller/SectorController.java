@@ -30,4 +30,6 @@ public class SectorController {
         return ResponseEntity.ok(sectorService.getAll());
     }
 
+
+
 }
