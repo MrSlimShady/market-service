@@ -82,7 +82,7 @@ public class AuthController {
         }
 
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
+        User newUser = new User(signUpRequest.getUsername(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getRole(),
                 signUpRequest.getEmail(),
@@ -115,14 +115,14 @@ public class AuthController {
 //        }
 //
 //        user.setRoles(roles);
-        userRepository.save(user);
+        userRepository.save(newUser);
 //        try{
 //            sendEmail(user);
 //        } catch (Exception e){
 //
 //        }
 
-        return ResponseEntity.ok(new MessageResponse("User "+user.getId() +" registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("User "+newUser.getId() +" registered successfully!"));
     }
 
     public void sendEmail(User user) throws AddressException, MessagingException {
