@@ -82,11 +82,6 @@ public class CompanyService {
 
     public List<StockPrice> getCompanyStockPrice(long companyID, long exchangeID, Date startDate, Date endDate){
         String code = company_exchangesRepository.findCompany_ExchangesByCompanyIdAndStockExchangeId(companyID,exchangeID).getCompanyCodeInExchange();
-
-//        return stockPriceRepository.findStockPriceByCompanyCode(code).stream().filter(s ->
-//                !(s.getDate().before(startDate) && s.getDate().after(endDate))
-//        ).collect(Collectors.toList());
-
         return stockPriceRepository.findStockPriceByCompanyCodeAndDateBetween(code,startDate,endDate);
     }
 

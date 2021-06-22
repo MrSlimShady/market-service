@@ -11,6 +11,7 @@ import com.stockmarket.marketservice.model.StockPriceIO;
 import com.stockmarket.marketservice.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class CompanyController {
     CompanyService companyService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> addCompany(@RequestBody CompanyIO companyIO){
 
         companyService.addNewCompany(companyIO);
@@ -34,9 +36,9 @@ public class CompanyController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> updateCompany(@RequestBody CompanyIO companyIO){
         companyService.updateCompany(companyIO);
-
         return ResponseEntity.ok(new MessageResponse("Company updated successfully!"));
     }
 
@@ -61,11 +63,11 @@ public class CompanyController {
     }
 
     @PostMapping("/company/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteCompany(@RequestBody Company company){
 
-
+        companyService.deleteCompany(company);
         return ResponseEntity.ok(new MessageResponse("Company deleted successfully!"));
-
     }
 
     @PostMapping("/price")

@@ -8,6 +8,7 @@ import com.stockmarket.marketservice.service.StockExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -26,9 +27,17 @@ public class StockExchangeController {
     StockExchangeService stockExchangeService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> addStockExchange(@RequestBody StockExchange stockExchange){
         stockExchangeService.saveStockExchange(stockExchange);
         return ResponseEntity.ok(new MessageResponse("Exchange added successfully!"));
+    }
+
+    @PostMapping("/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> deleteStockExchange(@RequestBody StockExchange stockExchange){
+        stockExchangeService.deleteExchange(stockExchange);
+        return ResponseEntity.ok(new MessageResponse("Exchange deleted successfully!"));
     }
 
 
@@ -37,24 +46,5 @@ public class StockExchangeController {
 
         return ResponseEntity.ok(stockExchangeService.getAllStockExchange());
     }
-
-//    @PostMapping("/companies")
-//    public ResponseEntity<?> getAllCompaniesInExchange(@RequestBody StockExchange stockExchange){
-//
-//        //REST template call to company-service
-//        RestTemplate restTemplate = new RestTemplate();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-//
-//
-//
-//        HttpEntity<StockExchange> entity = new HttpEntity<>(stockExchange, headers);
-////        ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8081/api/company/companies", entity,String.class);
-//
-//        ResponseEntity<List<Optional<Company>>> response = restTemplate.exchange("http://localhost:8081/api/company/companies", HttpMethod.POST, entity, new ParameterizedTypeReference<List<Optional<Company>>>() {});
-////        System.out.println(response.getBody());
-//        return ResponseEntity.ok(response.getBody());
-//    }
 
 }

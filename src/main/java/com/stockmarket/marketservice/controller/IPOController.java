@@ -27,4 +27,10 @@ public class IPOController {
         ipoService.addIPO(ipo);
         return ResponseEntity.ok(new MessageResponse("IPO added successfully!"));
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestBody IPODetails ipo){
+        ipoService.deleteIPO(ipo);
+        return ResponseEntity.ok(new MessageResponse("IPO deleted successfully!"));
+    }
 }

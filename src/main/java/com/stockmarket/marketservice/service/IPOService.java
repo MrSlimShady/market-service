@@ -23,4 +23,8 @@ public class IPOService {
     public List<IPODetails> getAll(){
         return ipoDetailsRepository.findAll();
     }
+
+    public void deleteIPO(IPODetails ipoDetails){
+        ipoDetailsRepository.delete(ipoDetails);
+    }
 }
