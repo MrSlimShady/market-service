@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @Entity
-public class User {
+public class UserEntity {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -24,7 +24,7 @@ public class User {
     private String mobileNumber;
     private Boolean confirmed;
 
-    public User(String username, String password, String role, String email, String mobileNumber) {
+    public UserEntity(String username, String password, String role, String email, String mobileNumber) {
         this.username = username;
         this.password = password;
         this.role = role;

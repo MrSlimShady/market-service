@@ -1,6 +1,6 @@
 package com.stockmarket.marketservice.controller;
 
-import com.stockmarket.marketservice.entity.User;
+import com.stockmarket.marketservice.entity.UserEntity;
 import com.stockmarket.marketservice.model.JwtResponse;
 import com.stockmarket.marketservice.model.LoginRequest;
 import com.stockmarket.marketservice.model.MessageResponse;
@@ -82,7 +82,7 @@ public class AuthController {
         }
 
         // Create new user's account
-        User newUser = new User(signUpRequest.getUsername(),
+        UserEntity newUserEntity = new UserEntity(signUpRequest.getUsername(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getRole(),
                 signUpRequest.getEmail(),
@@ -115,17 +115,17 @@ public class AuthController {
 //        }
 //
 //        user.setRoles(roles);
-        userRepository.save(newUser);
+        userRepository.save(newUserEntity);
 //        try{
 //            sendEmail(user);
 //        } catch (Exception e){
 //
 //        }
 
-        return ResponseEntity.ok(new MessageResponse("User "+newUser.getId() +" registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("User "+ newUserEntity.getId() +" registered successfully!"));
     }
 
-    public void sendEmail(User user) throws AddressException, MessagingException {
+    public void sendEmail(UserEntity userEntity) throws AddressException, MessagingException {
 
 
         final String username = "";
@@ -149,12 +149,12 @@ public class AuthController {
             message.setFrom(new InternetAddress(""));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse(user.getEmail())
+                    InternetAddress.parse(userEntity.getEmail())
             );
             message.setSubject("User confirmation email");
 
             message.setContent(
-                    "<h1><a href =\"http://localhost:8085/api/auth/confirm/" + user.getId() + "/\"> Click to confirm </a></h1>",
+                    "<h1><a href =\"http://localhost:8085/api/auth/confirm/" + userEntity.getId() + "/\"> Click to confirm </a></h1>",
                     "text/html");
             Transport.send(message);
 
@@ -166,7 +166,7 @@ public class AuthController {
 
     @GetMapping(value="/confirm/{userid}")
     public String confirmUser(@PathVariable Long userid) {
-        Optional<User> user =   userRepository.findById(userid);
+        Optional<UserEntity> user =   userRepository.findById(userid);
 
         user.get().setConfirmed(true);
         userRepository.save(user.get());

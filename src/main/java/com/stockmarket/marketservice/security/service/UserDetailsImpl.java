@@ -1,7 +1,7 @@
 package com.stockmarket.marketservice.security.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.stockmarket.marketservice.entity.User;
+import com.stockmarket.marketservice.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,23 +37,23 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
+    public static UserDetailsImpl build(UserEntity userEntity) {
         Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
 
 
-        setAuths.add(new SimpleGrantedAuthority(user.getRole()));
+        setAuths.add(new SimpleGrantedAuthority(userEntity.getRole()));
 
 
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(setAuths);
 
 
         return new UserDetailsImpl(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getMobileNumber(),
-                user.getConfirmed(),
-                user.getPassword(),
+                userEntity.getId(),
+                userEntity.getUsername(),
+                userEntity.getEmail(),
+                userEntity.getMobileNumber(),
+                userEntity.getConfirmed(),
+                userEntity.getPassword(),
                 authorities);
     }
 
