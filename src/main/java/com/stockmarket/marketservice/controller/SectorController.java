@@ -18,7 +18,6 @@ public class SectorController {
     SectorService sectorService;
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> addSector(@RequestBody Sector sector){
 
         sectorService.addSector(sector);

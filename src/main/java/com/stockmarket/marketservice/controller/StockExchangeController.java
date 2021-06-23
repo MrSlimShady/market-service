@@ -27,14 +27,12 @@ public class StockExchangeController {
     StockExchangeService stockExchangeService;
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> addStockExchange(@RequestBody StockExchange stockExchange){
         stockExchangeService.saveStockExchange(stockExchange);
         return ResponseEntity.ok(new MessageResponse("Exchange added successfully!"));
     }
 
     @PostMapping("/delete")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteStockExchange(@RequestBody StockExchange stockExchange){
         stockExchangeService.deleteExchange(stockExchange);
         return ResponseEntity.ok(new MessageResponse("Exchange deleted successfully!"));
